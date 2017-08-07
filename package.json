@@ -1,6 +1,6 @@
 {
   "name": "get-user-commits",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Uses the GitHub API to get all of user's commits via a series of successive requests. Caveat: Credentials often do not let a user see other users' commits.",
   "main": "index.js",
   "scripts": {
