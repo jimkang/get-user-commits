@@ -42,15 +42,5 @@
     "object-path-exists": "^1.0.0",
     "split-array": "^1.0.1",
     "standard-bail": "^2.0.1"
-  },
-  "browserify": {
-    "transform": [
-      "babelify",
-      {
-        "presets": [
-          "es2015"
-        ]
-      }
-    ]
   }
 }
