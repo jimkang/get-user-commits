@@ -45,7 +45,12 @@
   },
   "browserify": {
     "transform": [
-      "babelify"
+      "babelify",
+      {
+        "presets": [
+          "es2015"
+        ]
+      }
     ]
   }
 }
