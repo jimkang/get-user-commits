@@ -1,0 +1,41 @@
+{
+  "name": "get-user-commits",
+  "version": "1.0.0",
+  "description": "Uses the GitHub API to get all of user's commits via a series of successive requests. Caveat: Credentials often do not let a user see other users' commits.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/get-user-commits.git"
+  },
+  "keywords": ["github", "repo", "commit", "api"],
+  "author": "Jim Kang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimkang/get-user-commits/issues"
+  },
+  "homepage": "https://github.com/jimkang/get-user-commits",
+  "devDependencies": {
+    "assert-no-error": "^1.0.0",
+    "eslint": "^3.6.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.findwhere": "^3.1.0",
+    "longjohn": "^0.2.12",
+    "request": "^2.81.0",
+    "tape": "^4.8.0"
+  },
+  "dependencies": {
+    "call-next-tick": "^2.0.1",
+    "d3-queue": "^3.0.7",
+    "idmaker": "^0.1.1",
+    "lodash.compact": "^3.0.1",
+    "lodash.curry": "^4.1.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.pluck": "^3.1.2",
+    "object-path-exists": "^1.0.0",
+    "split-array": "^1.0.1",
+    "standard-bail": "^2.0.1"
+  }
+}
