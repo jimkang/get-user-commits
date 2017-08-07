@@ -1,6 +1,6 @@
 {
   "name": "get-user-commits",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uses the GitHub API to get all of user's commits via a series of successive requests. Caveat: Credentials often do not let a user see other users' commits.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git@github.com:jimkang/get-user-commits.git"
   },
-  "keywords": ["github", "repo", "commit", "api"],
+  "keywords": [
+    "github",
+    "repo",
+    "commit",
+    "api"
+  ],
   "author": "Jim Kang",
   "license": "MIT",
   "bugs": {
@@ -39,6 +44,8 @@
     "standard-bail": "^2.0.1"
   },
   "browserify": {
-    "transform": ["babelify"]
+    "transform": [
+      "babelify"
+    ]
   }
 }
