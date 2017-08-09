@@ -44,7 +44,7 @@ function GetCommitsForRepos({
 
     function handleCommitResponse(res, body, done) {
       if (!body) {
-        passNonFatalError(new Error('Empty body received from commit reqeust.'));
+        passNonFatalError(new Error('Empty body received from commit request.'));
       }
       else if (body.errors) {
         if (body.errors.some(isAGitHubRateLimitErrorMessage)) {
@@ -58,6 +58,9 @@ function GetCommitsForRepos({
         passNonFatalError(
           new Error('Could not get data/viewer from commit query response body.')
         );
+      }
+      else if (res.statusCode < 200 || res.statusCode > 299) {
+        passNonFatalError(new Error('Error from GitHub API: ' + res.statusCode + ', ' + body));
       }
       else {
         updateStateWithQueryResult(

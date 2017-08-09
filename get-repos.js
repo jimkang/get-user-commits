@@ -41,6 +41,9 @@ function GetRepos({baseURL = 'https://api.github.com', token, userAgent, request
       else if (pathExists(body, ['data', 'user', 'repositories', 'nodes'])) {
         body.data.user.repositories.nodes.forEach(collectRepository);
       }
+      else if (res.statusCode < 200 || res.statusCode > 299) {
+        onNonFatalError(new Error('Error from GitHub API: ' + res.statusCode + ', ' + body));
+      }
 
       if (pathExists(body, ['data', 'user', 'repositories', 'pageInfo']) &&
         body.data.user.repositories.pageInfo.hasNextPage) {
