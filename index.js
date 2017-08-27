@@ -20,7 +20,8 @@ function getUserCommits(
     onNonFatalError,
     userAgent,
     shouldIncludeRepo,
-    getCommitsForRepos
+    getCommitsForRepos,
+    queryLogger
   },
   allDone) {
 
@@ -35,10 +36,11 @@ function getUserCommits(
 
   if (!getCommitsForRepos) {
     getCommitsForRepos = GetCommitsForRepos({
-      token: token,
-      userEmail: userEmail,
-      request: request,
-      userAgent: userAgent
+      token,
+      userEmail,
+      request,
+      userAgent,
+      queryLogger
     });
   }
 
