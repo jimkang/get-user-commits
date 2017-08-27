@@ -41,7 +41,8 @@ Usage
       shouldIncludeRepo: filterRepo,
       existingRepos: reposWeAlreadyHaveSomeOfTheCommitsFor,
       onRepo: logRepo,
-      onCommit: logCommit
+      onCommit: logCommit,
+      queryLogger: console.error // Specify a query logger if you want to see the actual GraphQL queries for debugging.
     };
 
     getUserCommits(

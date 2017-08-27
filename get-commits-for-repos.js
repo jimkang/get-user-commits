@@ -14,7 +14,8 @@ function GetCommitsForRepos({
     token = 'default',
     userEmail,
     request,
-    userAgent
+    userAgent,
+    queryLogger
   }) {
 
   const apiURL = baseURL + '/graphql';
@@ -35,7 +36,9 @@ function GetCommitsForRepos({
       var query = getCommitQuery(
         reposThatHaveCommitsToGet, userEmail
       );
-      // console.log('query', query);
+      if (queryLogger) {
+        queryLogger('query', query);
+      }
       request(
         getGQLReqOpts({apiURL: apiURL, token: token, userAgent: userAgent, query: query}),
         sb(handleCommitResponse, done)
