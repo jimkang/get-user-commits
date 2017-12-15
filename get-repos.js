@@ -4,12 +4,20 @@ var pathExists = require('object-path-exists');
 var isAGitHubRateLimitErrorMessage = require('./is-a-github-rate-limit-error-message');
 var getGQLReqOpts = require('./get-gql-req-opts');
 
-function GetRepos({baseURL = 'https://api.github.com', token, userAgent, request}) {
+function GetRepos({
+  baseURL = 'https://api.github.com',
+  token,
+  userAgent,
+  request
+}) {
   const apiURL = baseURL + '/graphql';
 
   return getRepos;
 
-  function getRepos({username, shouldIncludeRepo, onRepo, onNonFatalError}, done) {
+  function getRepos(
+    { username, shouldIncludeRepo, onRepo, onNonFatalError },
+    done
+  ) {
     var lastRepoCursor;
     var repos = [];
 
@@ -37,28 +45,28 @@ function GetRepos({baseURL = 'https://api.github.com', token, userAgent, request
           done(new Error('Rate limit error'));
           return;
         }
-      }
-      else if (pathExists(body, ['data', 'user', 'repositories', 'nodes'])) {
+      } else if (pathExists(body, ['data', 'user', 'repositories', 'nodes'])) {
         body.data.user.repositories.nodes.forEach(collectRepository);
-      }
-      else if (res.statusCode < 200 || res.statusCode > 299) {
-        onNonFatalError(new Error('Error from GitHub API: ' + res.statusCode + ', ' + body));
+      } else if (res.statusCode < 200 || res.statusCode > 299) {
+        onNonFatalError(
+          new Error('Error from GitHub API: ' + res.statusCode + ', ' + body)
+        );
       }
 
-      if (pathExists(body, ['data', 'user', 'repositories', 'pageInfo']) &&
-        body.data.user.repositories.pageInfo.hasNextPage) {
-
+      if (
+        pathExists(body, ['data', 'user', 'repositories', 'pageInfo']) &&
+        body.data.user.repositories.pageInfo.hasNextPage
+      ) {
         lastRepoCursor = body.data.user.repositories.pageInfo.endCursor;
         callNextTick(postNextQuery);
-      }
-      else {
+      } else {
         callNextTick(done, null, repos);
       }
     }
 
     function collectRepository(repo) {
       if (typeof shouldIncludeRepo !== 'function' || shouldIncludeRepo(repo)) {
-        repo.lastCheckedDate = (new Date()).toISOString();
+        repo.lastCheckedDate = new Date().toISOString();
         repos.push(repo);
         if (onRepo) {
           onRepo(repo);

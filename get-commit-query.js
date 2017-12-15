@@ -28,7 +28,9 @@ function getCommitQuery(repos, userEmail) {
     var whereClause = getWhereClause(repo);
 
     return `
-    ${randomId(4)}_${sanitizeAsGQLId(repo.name)}: repository(name: "${repo.name}") {
+    ${randomId(4)}_${sanitizeAsGQLId(repo.name)}: repository(name: "${
+      repo.name
+    }") {
       defaultBranchRef {
         id
         repository {
@@ -37,7 +39,9 @@ function getCommitQuery(repos, userEmail) {
         target {
           ... on Commit {
             id
-            history(author: {emails: "${userEmail}"}, first: 20 ${whereClause}) {
+            history(author: {emails: "${userEmail}"}, first: 20 ${
+      whereClause
+    }) {
               ...CommitHistoryFields
             }
           }
@@ -61,15 +65,14 @@ function getWhereClause(repo) {
     if (repo.weHaveTheOldestCommit) {
       if (repo.lastCursor) {
         whereClause = `after: "${repo.lastCursor}"`;
-      }
-      else {
+      } else {
         var since = adjustDateString(
-          oldestToNewestDates[oldestToNewestDates.length -1], 1
+          oldestToNewestDates[oldestToNewestDates.length - 1],
+          1
         );
         whereClause = `since: "${since}"`;
       }
-    }
-    else {
+    } else {
       var until = adjustDateString(oldestToNewestDates[0], -1);
       whereClause = `until: "${until}"`;
     }
@@ -78,8 +81,9 @@ function getWhereClause(repo) {
 }
 
 function adjustDateString(isoString, adjustmentInSeconds) {
-  return (new Date((new Date(isoString)).getTime() + adjustmentInSeconds * 1000))
-    .toISOString();
+  return new Date(
+    new Date(isoString).getTime() + adjustmentInSeconds * 1000
+  ).toISOString();
 }
 
 module.exports = getCommitQuery;

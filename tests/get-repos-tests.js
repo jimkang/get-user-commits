@@ -28,7 +28,10 @@ function getReposTest(t) {
   function checkRepo(repo) {
     repoCount += 1;
     t.ok(repo.name, 'Repo has a name.');
-    t.ok(repo.name !== 'KIF', 'Repo is not a repo that should have been filtered out.');
+    t.ok(
+      repo.name !== 'KIF',
+      'Repo is not a repo that should have been filtered out.'
+    );
     t.ok(repo.pushedAt, 'Repo has a pushedAt date.');
     t.ok(repo.lastCheckedDate, 'Repo has a lastCheckedDate.');
   }

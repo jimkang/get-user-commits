@@ -23,8 +23,8 @@ function getUserCommits(
     getCommitsForRepos,
     queryLogger
   },
-  allDone) {
-
+  allDone
+) {
   var collectedRepos = [];
 
   var getRepos = GetRepos({
@@ -45,7 +45,7 @@ function getUserCommits(
   }
 
   getRepos(
-    {username, shouldIncludeRepo, onRepo, onNonFatalError},
+    { username, shouldIncludeRepo, onRepo, onNonFatalError },
     sb(callGetCommits, passRepos)
   );
 
@@ -60,18 +60,15 @@ function getUserCommits(
     q.awaitAll(passRepos);
 
     function queueGet(repoGroup) {
-      q.defer(
-        getCommitsForRepos,
-        {
-          repos: repoGroup,
-          onCommitsForRepo: collectCommits,
-          onNonFatalError: onNonFatalError
-        }
-      );
+      q.defer(getCommitsForRepos, {
+        repos: repoGroup,
+        onCommitsForRepo: collectCommits,
+        onNonFatalError: onNonFatalError
+      });
     }
 
     function collectCommits(repoName, commits) {
-      var repo = findWhere(repos, {name: repoName});
+      var repo = findWhere(repos, { name: repoName });
       if (!repo.commits) {
         repo.commits = [];
       }
@@ -85,11 +82,11 @@ function getUserCommits(
           onCommit(commit);
         }
       }
-    }    
+    }
   }
 
   function reconcileRepo(repo) {
-    var existingRepo = findWhere(existingRepos, {name: repo.name});
+    var existingRepo = findWhere(existingRepos, { name: repo.name });
     if (existingRepo) {
       repo = defaults(repo, existingRepo);
     }

@@ -1,9 +1,9 @@
-function getGQLReqOpts({apiURL, token, userAgent, query}) {
+function getGQLReqOpts({ apiURL, token, userAgent, query }) {
   var opts = {
     method: 'POST',
     url: apiURL,
     headers: {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + token
     },
     body: {
       query: query

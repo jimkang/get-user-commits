@@ -24,10 +24,10 @@ function getCommitsTest(t) {
         name: 'exogenite',
         commits: [
           {
-            committedDate: (new Date('2017-03-10')).toISOString()
+            committedDate: new Date('2017-03-10').toISOString()
           },
           {
-            committedDate: (new Date('2017-03-13')).toISOString()
+            committedDate: new Date('2017-03-13').toISOString()
           }
         ],
         isValid: true
@@ -52,7 +52,7 @@ function getCommitsTest(t) {
   function checkCommits(repoName, commits) {
     repoCount += 1;
     t.ok(
-      findWhere(opts.repos, {name: repoName}),
+      findWhere(opts.repos, { name: repoName }),
       'Repo is one of the ones we asked for.'
     );
     commits.forEach(checkCommit);
@@ -67,9 +67,13 @@ function getCommitsTest(t) {
     // console.log('commit', commit);
   }
 
-  function checkFinalResults(error) {    
+  function checkFinalResults(error) {
     assertNoError(t.ok, error, 'No error while getting commits.');
-    t.equal(opts.repos.filter(repo => repo.isValid).length, repoCount, 'Final repo count is correct.');
+    t.equal(
+      opts.repos.filter(repo => repo.isValid).length,
+      repoCount,
+      'Final repo count is correct.'
+    );
     t.equal(commitCount, 8, 'Final commit count is correct.');
     t.end();
   }

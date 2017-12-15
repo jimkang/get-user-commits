@@ -12,11 +12,11 @@ var getUserCommits = require('../index');
 test('Get repos and commits', getUserCommitsTest);
 
 var reposToCareAbout = {
-  'exogenite': {
+  exogenite: {
     shouldGetOlderAndNewerCommits: true,
     shouldHaveTheOldestCommitFlagSet: true
   },
-  'godtributes': {
+  godtributes: {
     shouldGetOlderCommits: true,
     shouldHaveTheOldestCommitFlagSet: true
   },
@@ -101,24 +101,32 @@ function getUserCommitsTest(t) {
   function checkCommit(commit) {
     commitCount += 1;
     t.ok(commit.message, commit.repoName + ' commit has a message.');
-    t.ok(commit.abbreviatedOid, commit.repoName + ' commit has an abbreviatedOid.');
+    t.ok(
+      commit.abbreviatedOid,
+      commit.repoName + ' commit has an abbreviatedOid.'
+    );
     t.ok(commit.committedDate, commit.repoName + ' commit has a date.');
     t.ok(commit.repoName, commit.repoName + ' commit has a repoName');
 
-    var existingRepo = findWhere(existingRepos, {name: commit.repoName});
+    var existingRepo = findWhere(existingRepos, { name: commit.repoName });
     if (!reposToCareAbout[commit.repoName].shouldGetOlderAndNewerCommits) {
       if (reposToCareAbout[commit.repoName].shouldGetOlderCommits) {
         t.ok(
           new Date(commit.committedDate) <
             new Date(existingRepo.commits[0].committedDate),
-          commit.repoName + ' commit date is older than the oldest existingRepo commit date.'
+          commit.repoName +
+            ' commit date is older than the oldest existingRepo commit date.'
         );
-      }
-      else {
+      } else {
         t.ok(
           new Date(commit.committedDate) >
-            new Date(existingRepo.commits[existingRepo.commits.length - 1].committedDate),
-          commit.repoName + ' commit date is newer than the newest existingRepo commit date.'
+            new Date(
+              existingRepo.commits[
+                existingRepo.commits.length - 1
+              ].committedDate
+            ),
+          commit.repoName +
+            ' commit date is newer than the newest existingRepo commit date.'
         );
       }
     }
@@ -170,5 +178,5 @@ function filterRepo(repo) {
 }
 
 function isoStringForDateString(s) {
-  return (new Date(s)).toISOString();
+  return new Date(s).toISOString();
 }
