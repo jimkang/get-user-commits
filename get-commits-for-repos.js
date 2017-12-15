@@ -94,20 +94,22 @@ function updateStateWithQueryResult(
   for (var queryId in viewer) {
     let queryResult = viewer[queryId];
     if (queryResult) {
-      let repoName = queryResult.defaultBranchRef.repository.name;
-      let pageInfo = queryResult.defaultBranchRef.target.history.pageInfo;
-      let repo = findWhere(reposThatHaveCommitsToGet, {name: repoName});
-      if (pageInfo.hasNextPage) {
-        repo.lastCursor = pageInfo.endCursor;
-      }
-      else {
-        delete repo.lastCursor;
-        repo.weHaveTheOldestCommit = true;
-      }
+      if (queryResult.defaultBranchRef) {
+        let repoName = queryResult.defaultBranchRef.repository.name;
+        let pageInfo = queryResult.defaultBranchRef.target.history.pageInfo;
+        let repo = findWhere(reposThatHaveCommitsToGet, {name: repoName});
+        if (pageInfo.hasNextPage) {
+          repo.lastCursor = pageInfo.endCursor;
+        }
+        else {
+          delete repo.lastCursor;
+          repo.weHaveTheOldestCommit = true;
+        }
 
-      let commits = pluck(queryResult.defaultBranchRef.target.history.edges, 'node');
-      commits.forEach(curry(appendRepoNameToCommit)(repo.name));
-      onCommitsForRepo(repo.name, commits);
+        let commits = pluck(queryResult.defaultBranchRef.target.history.edges, 'node');
+        commits.forEach(curry(appendRepoNameToCommit)(repo.name));
+        onCommitsForRepo(repo.name, commits);
+      }
     }
   }
 }

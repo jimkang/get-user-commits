@@ -29,10 +29,17 @@ function getCommitsTest(t) {
           {
             committedDate: (new Date('2017-03-13')).toISOString()
           }
-        ]
+        ],
+        isValid: true
       },
       {
-        name: 'toptracks'
+        name: 'toptracks',
+        isValid: true
+      },
+      {
+        name: 'plane-data',
+        isValid: false
+        // This repo has no default branch. It should handle this.
       }
     ],
     onCommitsForRepo: checkCommits,
@@ -62,7 +69,7 @@ function getCommitsTest(t) {
 
   function checkFinalResults(error) {    
     assertNoError(t.ok, error, 'No error while getting commits.');
-    t.equal(opts.repos.length, repoCount, 'Final repo count is correct.');
+    t.equal(opts.repos.filter(repo => repo.isValid).length, repoCount, 'Final repo count is correct.');
     t.equal(commitCount, 8, 'Final commit count is correct.');
     t.end();
   }
